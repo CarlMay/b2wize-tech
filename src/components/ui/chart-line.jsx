@@ -5,7 +5,7 @@ class ResponsiveLineChart extends React.Component {
 
     render() {
 
-        const {data, monthDate} = this.props;
+        const {data, monthDate, onClick} = this.props;
         // console.log('--=ResponsiveLineChart::monthDate', monthDate);
 
         return (
@@ -35,7 +35,8 @@ class ResponsiveLineChart extends React.Component {
                     legendOffset: -40,
                     legendPosition: 'middle'
                 }}
-                colors={{scheme: 'nivo'}}
+                colors={{scheme: 'category10'}}
+                onClick={onClick}
                 pointSize={10}
                 pointColor={{theme: 'background'}}
                 pointBorderWidth={2}

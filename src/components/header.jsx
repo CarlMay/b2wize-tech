@@ -11,20 +11,22 @@ const Header = () => {
     };
 
     const navStyle = {
-        backgroundColor: '#222',
+        backgroundColor: '#1ed760',
     };
 
     const linkStyle = {
-        color: '#999',
+        color: '#181823',
         cursor: 'pointer !important',
         marginRight: '1rem',
+        maxWidth: '25%',
+        fontWeight: 'bold',
     };
 
     return (
         <div className={'ui secondary pointing menu'} style={navStyle}>
             <div className={'left menu'}>
                 <Link to={'/B2Wize'} className={'item'} style={linkStyle}>
-                    <Image src='/images/favs.png' size='mini' style={iconStyle}/>
+                    <Image src='/images/b2wize_logo_dark.png' size='mini' style={iconStyle}/>
                     <span>B2Wize</span>
                 </Link>
             </div>

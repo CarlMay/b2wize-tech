@@ -34,6 +34,7 @@ class ProductDetails extends Component {
         this.updateChartData = this.updateChartData.bind(this);
         this.calculateRollingAverage = this.calculateRollingAverage.bind(this);
         this.movingAvg = this.movingAvg.bind(this);
+        this.onChartClick = this.onChartClick.bind(this);
         this.props.getProductDetail(this.props.partId);
     }
 
@@ -59,7 +60,7 @@ class ProductDetails extends Component {
 
         for (let i = 0; i < salesData.length; i++) {
 
-            let end = (i === 0) ? ((i + averageDays) -1) : (i + averageDays);
+            let end = (i === 0) ? ((i + averageDays) - 1) : (i + averageDays);
             let start = i + 1;
             let range = _.slice(salesData, start, end);
             let tail = _.reduce(range, function (total, n) {
@@ -74,7 +75,6 @@ class ProductDetails extends Component {
 
         return moveMean;
     };
-
 
 
     calculateRollingAverage = (chartDataCurrentMonthCurrent, averageDays) => {
@@ -106,6 +106,11 @@ class ProductDetails extends Component {
         // console.log('=--+monthlyAverage', monthlyAverage);
         // console.log('=--+averageChartData', averageChartData);
 
+    };
+
+    onChartClick = (point, event) => {
+        console.log('--=onChartClick point', point);
+        console.log('--=onChartClick event', event);
     };
 
 
@@ -149,6 +154,8 @@ class ProductDetails extends Component {
 
         let chartDataCurrentMonthCurrent = [];
         let monthDate = moment(productDetailData[partId][0].transactionDate).format('ll').toString();
+        let startDateStr = moment(productDetailData[partId][1].transactionDate).format('ll').toString();
+        let startDateSet = false;
 
 
         Object.keys(productDetailData[partId]).map((items) => {
@@ -160,16 +167,22 @@ class ProductDetails extends Component {
             let day = moment(transactionDate).format('D');
             let data = {"x": day, "y": partItem.Sales};
 
-
             if (afterLastMonth && beforeTomorrow) {
+                if(!startDateSet) {
+                    startDateStr = moment(transactionDate).format('ll').toString();
+                    startDateSet = true;
+                }
                 chartDataCurrentMonthCurrent = [...chartDataCurrentMonthCurrent, data];
             }
 
             return (data);
         });
 
+        // console.log('--=chartDataCurrentMonthCurrent', chartDataCurrentMonthCurrent);
+        let xLegend = `${startDateStr} / ${monthDate}`;
 
-        this.updateChartData(chartDataCurrentMonthCurrent, monthDate, part);
+
+        this.updateChartData(chartDataCurrentMonthCurrent, xLegend, part);
         this.setState({hasChartData: true});
 
     };
@@ -188,10 +201,10 @@ class ProductDetails extends Component {
         };
 
         if (hasSalesData) {
-           return (
+            return (
                 <div className="row">
                     <div className="fifteen wide column" style={graphStyle}>
-                        <ResponsiveLineChart data={partItem} monthDate={monthDate}/>
+                        <ResponsiveLineChart data={partItem} monthDate={monthDate} onClick={(point, event) => this.onChartClick(point, event)}/>
                         {/*<ResponsiveBarChart data={barData}/>*/}
                     </div>
                     {/*<div className="two wide column" style={graphStyle}>Side-bar</div>*/}
@@ -199,7 +212,7 @@ class ProductDetails extends Component {
             );
         } else {
             return (
-                <div className="ui centered active inline loader" style={loaderStyle}> </div>
+                <div className="ui centered active inline loader" style={loaderStyle}></div>
             )
         }
 
