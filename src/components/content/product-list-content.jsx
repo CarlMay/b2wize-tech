@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
 import ContentContainer from "../ui/content-container";
-// import { ResponsiveLine } from '@nivo/line'
-// import {Icon, Label, Menu, Table} from 'semantic-ui-react'
-// import SearchBar from '../shared/searchBar';
-// import _ from 'lodash';
-// import {multiply, round} from 'lodash';
 import {connect} from "react-redux";
 import {getProduct} from "../../actions";
 import ProductItem from "./productList";
@@ -35,7 +30,7 @@ class ProductListContent extends Component {
 
         if (!partsList || partsList.length === 0 || productData.length === 0) {
             return (
-                <div className="ui centered active inline loader" style={loaderStyle}></div>
+                <div className="ui centered active inline loader" style={loaderStyle}> </div>
             )
         }
 

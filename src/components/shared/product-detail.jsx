@@ -88,15 +88,14 @@ class ProductDetails extends Component {
             return item.x;
         });
 
-        const monthTotal = _.reduce(flat, function (total, n) {
-            return total + n;
-        });
-
-        const monthlyAverage = monthTotal / flat.length;
+        // const monthTotal = _.reduce(flat, function (total, n) {
+        //     return total + n;
+        // });
+        // const monthlyAverage = monthTotal / flat.length;
         const movingAvgData = this.movingAvg(flat, averageDays);
 
 
-        const averageChartData = xAxis.map((day, i) => {
+        return xAxis.map((day, i) => {
             return {"x": day, "y": (movingAvgData[i] || 0)}
         });
 
@@ -107,7 +106,6 @@ class ProductDetails extends Component {
         // console.log('=--+monthlyAverage', monthlyAverage);
         // console.log('=--+averageChartData', averageChartData);
 
-        return averageChartData;
     };
 
 
@@ -153,7 +151,7 @@ class ProductDetails extends Component {
         let monthDate = moment(productDetailData[partId][0].transactionDate).format('ll').toString();
 
 
-        Object.keys(productDetailData[partId]).map((items, i) => {
+        Object.keys(productDetailData[partId]).map((items) => {
             const partItem = productDetailData[partId][items];
 
             let transactionDate = moment(partItem.TransactionDate).format('YYYY-MM-DD');
@@ -201,7 +199,7 @@ class ProductDetails extends Component {
             );
         } else {
             return (
-                <div className="ui centered active inline loader" style={loaderStyle}></div>
+                <div className="ui centered active inline loader" style={loaderStyle}> </div>
             )
         }
 

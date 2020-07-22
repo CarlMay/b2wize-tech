@@ -9,7 +9,8 @@ const App = () => {
         <div className={'ui container'}>
             <BrowserRouter>
                 <Header />
-                <Route path={'/list'} exact component={ProductListContent} />
+                <Route path={'/'} exact component={ProductListContent} />
+                <Route path={'/B2Wize'} exact component={ProductListContent} />
             </BrowserRouter>
         </div>
     );
