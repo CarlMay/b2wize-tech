@@ -64,7 +64,7 @@ class ProductDetails extends Component {
             let range = _.slice(salesData, start, end);
             let tail = _.reduce(range, function (total, n) {
                 return total + n;
-            });
+            }) || 0;
 
             let mean = (salesData[i] + tail) / averageDays;
             moveMean.push(mean);
@@ -78,7 +78,7 @@ class ProductDetails extends Component {
 
 
     calculateRollingAverage = (chartDataCurrentMonthCurrent, averageDays) => {
-        console.log('=--+calculateRollingAverage', chartDataCurrentMonthCurrent, averageDays);
+        // console.log('=--+calculateRollingAverage', chartDataCurrentMonthCurrent, averageDays);
 
         const flat = _.map(chartDataCurrentMonthCurrent, function (item) {
             return item.y;
